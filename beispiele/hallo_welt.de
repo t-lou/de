@@ -1,0 +1,7 @@
+funktion Haupteingang:
+
+    konstante Zeichenkette hallo_welt = "Hallo Welt!".
+
+    hallo_welt ausgeben.
+
+funktionsende Haupteingang
