@@ -34,6 +34,7 @@ class Tokenizer:
         "funktionsende",
         "ist",
         "ausgeben",
+        "variable",
     }
 
     def __init__(self, text):
@@ -67,6 +68,7 @@ class Tokenizer:
                 self._advance()
                 continue
 
+            # not expected in the future
             if ch == "=":
                 tokens.append(Token(TokenType.EQUALS, "="))
                 self._advance()

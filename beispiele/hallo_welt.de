@@ -1,7 +1,15 @@
 funktion Haupteingang:
 
-    konstante Zeichenkette hallo_welt = "Hallo Welt!".
+    konstante Zeichenkette hallo_welt ist "Hallo Welt!".
 
     hallo_welt ausgeben.
+
+    variable Zeichenkette grüße ist "Moin!".
+
+    grüße ausgeben.
+
+    grüße ist "Servus".
+
+    grüße ausgeben.
 
 funktionsende Haupteingang

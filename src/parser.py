@@ -3,7 +3,7 @@
 # ============================
 
 
-from ast_nodes import Block, Call, ConstDecl, FunctionDef, Program, StringLiteral, Variable
+import ast_nodes
 from tokenizer import TokenType
 
 
@@ -21,7 +21,7 @@ class Parser:
         while not self._peek_type(TokenType.EOF):
             functions.append(self.parse_function())
 
-        return Program(functions)
+        return ast_nodes.Program(functions)
 
     # -------------------------
     #   FUNCTION
@@ -40,7 +40,7 @@ class Parser:
         if end_name != name:
             raise Exception(f"Funktionsende-Name stimmt nicht überein: {end_name} != {name}")
 
-        return FunctionDef(name, params=[], body=body)
+        return ast_nodes.FunctionDef(name, params=[], body=body)
 
     # -------------------------
     #   BLOCK
@@ -51,7 +51,7 @@ class Parser:
         while not self._peek_keyword("funktionsende"):
             statements.append(self.parse_statement())
 
-        return Block(statements)
+        return ast_nodes.Block(statements)
 
     # -------------------------
     #   STATEMENTS
@@ -63,11 +63,30 @@ class Parser:
         if tok.type == TokenType.KEYWORD and tok.value == "konstante":
             return self.parse_const_decl()
 
+        if tok.type == TokenType.KEYWORD and tok.value == "variable":
+            return self.parse_var_decl()
+
         # hallo_welt ausgeben.
         if tok.type == TokenType.IDENTIFIER:
-            return self.parse_call()
+            return self.parse_identifier_statement()
 
         raise Exception(f"Unerwartete Anweisung: {tok}")
+
+    def parse_identifier_statement(self):
+        # first token: variable name
+        name_tok = self._expect(TokenType.IDENTIFIER)
+
+        # assignment: <name> ist <expr>.
+        if self._peek().type == TokenType.KEYWORD and self._peek().value == "ist":
+            self._advance()  # consume "ist"
+            value = self.parse_expression()
+            self._expect(TokenType.DOT)
+            return ast_nodes.Assignment(name_tok.value, value)
+
+        # call: <name> ausgeben.
+        func_tok = self._expect(TokenType.KEYWORD)  # e.g. "ausgeben"
+        self._expect(TokenType.DOT)
+        return ast_nodes.Call(func_tok.value, [ast_nodes.Variable(name_tok.value)])
 
     # -------------------------
     #   CONST DECL
@@ -78,12 +97,24 @@ class Parser:
         type_name = self._expect(TokenType.IDENTIFIER).value
         name = self._expect(TokenType.IDENTIFIER).value
 
-        self._expect(TokenType.EQUALS)
+        self._expect(TokenType.KEYWORD, "ist")
         value = self.parse_expression()
 
         self._expect(TokenType.DOT)
 
-        return ConstDecl(name, type_name, value)
+        return ast_nodes.ConstDecl(name, type_name, value)
+
+    # -------------------------
+    #   VAR DECL
+    # -------------------------
+    def parse_var_decl(self):
+        self._expect(TokenType.KEYWORD, "variable")
+        type_name = self._expect(TokenType.IDENTIFIER).value
+        name = self._expect(TokenType.IDENTIFIER).value
+        self._expect(TokenType.KEYWORD, "ist")
+        value = self.parse_expression()
+        self._expect(TokenType.DOT)
+        return ast_nodes.VarDecl(name, type_name, value)
 
     # -------------------------
     #   CALL
@@ -95,7 +126,7 @@ class Parser:
 
         self._expect(TokenType.DOT)
 
-        return Call(func, [Variable(var_name)])
+        return ast_nodes.Call(func, [ast_nodes.Variable(var_name)])
 
     # -------------------------
     #   EXPRESSIONS
@@ -105,7 +136,7 @@ class Parser:
 
         if tok.type == TokenType.STRING:
             self._advance()
-            return StringLiteral(tok.value)
+            return ast_nodes.StringLiteral(tok.value)
 
         raise Exception(f"Unerwarteter Ausdruck: {tok}")
 

@@ -41,3 +41,16 @@ class StringLiteral:
 class Variable:
     def __init__(self, name):
         self.name = name
+
+
+class VarDecl:
+    def __init__(self, name, type_, value):
+        self.name = name
+        self.type = type_
+        self.value = value
+
+
+class Assignment:
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
