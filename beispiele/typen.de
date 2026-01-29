@@ -1,4 +1,4 @@
-funktion Haupteingang:
+funktion Typen_zeigen:
 
     konstante Ganzzahl8 beispiel_ganzzahl8 ist 2.
     konstante Ganzzahl16 beispiel_ganzzahl16 ist 4.
@@ -46,4 +46,10 @@ funktion Haupteingang:
 
     karte ausgeben.
 
-funktionsende Haupteingang
+funktionsende Typen_zeigen
+
+funktion losgehen:
+
+    Typen_zeigen.
+
+funktionsende losgehen

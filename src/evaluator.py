@@ -16,10 +16,10 @@ class Evaluator:
     #   ENTRY POINT
     # -------------------------
     def run(self):
-        if "Haupteingang" not in self.functions:
-            raise Exception("Keine Funktion 'Haupteingang' gefunden.")
+        if "losgehen" not in self.functions:
+            raise Exception("Keine Funktion 'losgehen' gefunden.")
 
-        self.eval_function(self.functions["Haupteingang"])
+        self.eval_function(self.functions["losgehen"])
 
     # -------------------------
     #   FUNCTION

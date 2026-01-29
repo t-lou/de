@@ -1,4 +1,4 @@
-funktion Haupteingang:
+funktion losgehen:
 
     konstante Zeichenkette hallo_welt ist "Hallo Welt!".
 
@@ -8,8 +8,8 @@ funktion Haupteingang:
 
     grüße ausgeben.
 
-    grüße ist "Servus".
+    grüße ist "Servus!".
 
     grüße ausgeben.
 
-funktionsende Haupteingang
+funktionsende losgehen

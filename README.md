@@ -23,13 +23,13 @@ Sobald die Sprache reif genug ist, wird sie sich selbst neu implementieren — g
 Datei: `hallo_welt.de`
 
 ```
-funktion Haupteingang:
+funktion losgehen:
 
     konstante Zeichenkette hallo_welt = "Hallo Welt!".
 
     hallo_welt ausgeben.
 
-funktionsende Haupteingang
+funktionsende losgehen
 ```
 
 ---
@@ -75,7 +75,7 @@ Aktuell unterstützt:
 Führt den AST aus.
 Unterstützt:
 
-- Ausführen der Funktion `Haupteingang`
+- Ausführen der Funktion `losgehen`
 - Konstanten im lokalen Funktions‑Scope
 - eingebaute Funktion `ausgeben`
 
