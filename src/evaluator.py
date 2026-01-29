@@ -55,11 +55,34 @@ class Evaluator:
             return
 
         if isinstance(stmt, ast_nodes.Assignment):
-            self.eval_assignment(stmt)
+            # self.eval_assignment(stmt)
+            value = self.eval_expression(stmt.value)
+            self.env[stmt.name] = value
             return
 
         if isinstance(stmt, ast_nodes.Call):
             self.eval_call(stmt)
+            return
+
+        if isinstance(stmt, ast_nodes.Append):
+            container = self.env[stmt.target]
+            value = self.eval_expression(stmt.value)
+
+            if not isinstance(container, list):
+                raise Exception(f"Kann nicht zu {stmt.target} hinzufügen: kein Vektor/Array")
+
+            container.append(value)
+            return
+
+        if isinstance(stmt, ast_nodes.DictSet):
+            container = self.env[stmt.target]
+            key = self.eval_expression(stmt.key)
+            value = self.eval_expression(stmt.value)
+
+            if not isinstance(container, dict):
+                raise Exception(f"Kann keinen Schlüssel in {stmt.target} setzen: kein Wörterbuch")
+
+            container[key] = value
             return
 
         raise Exception(f"Unbekannte Anweisung: {stmt}")
@@ -79,13 +102,29 @@ class Evaluator:
     #   EXPRESSIONS
     # -------------------------
     def eval_expression(self, expr):
+        # integer literal
+        if isinstance(expr, ast_nodes.IntLiteral):
+            return expr.value
+
+        # float literal
+        if isinstance(expr, ast_nodes.FloatLiteral):
+            return expr.value
+
+        # string literal
         if isinstance(expr, ast_nodes.StringLiteral):
             return expr.value
 
+        # variable reference
         if isinstance(expr, ast_nodes.Variable):
-            if expr.name not in self.env:
-                raise Exception(f"Variable nicht definiert: {expr.name}")
             return self.env[expr.name]
+
+        # array literal
+        if isinstance(expr, ast_nodes.ArrayLiteral):
+            return [self.eval_expression(e) for e in expr.elements]
+
+        # dictionary literal
+        if isinstance(expr, ast_nodes.DictLiteral):
+            return {self.eval_expression(k): self.eval_expression(v) for (k, v) in expr.entries}
 
         raise Exception(f"Unbekannter Ausdruck: {expr}")
 

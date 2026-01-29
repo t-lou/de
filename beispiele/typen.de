@@ -1,15 +1,15 @@
 funktion Haupteingang:
 
-    konstante Ganzzahl8 beispiel_ganzzahl8 ist 2U.
-    konstante Ganzzahl16 beispiel_ganzzahl16 ist 4U.
-    konstante Ganzzahl32 beispiel_ganzzahl32 ist 8U.
-    konstante Ganzzahl64 beispiel_ganzzahl64 ist 16U.
+    konstante Ganzzahl8 beispiel_ganzzahl8 ist 2.
+    konstante Ganzzahl16 beispiel_ganzzahl16 ist 4.
+    konstante Ganzzahl32 beispiel_ganzzahl32 ist 8.
+    konstante Ganzzahl64 beispiel_ganzzahl64 ist 16.
     konstante Zahl8 beispiel_zahl8 ist 1.
     konstante Zahl16 beispiel_zahl16 ist 10.
     konstante Zahl32 beispiel_zahl32 ist 100.
     konstante Zahl64 beispiel_zahl64 ist 1000.
-    konstante Fließ32 beispiel_fließ32 ist 3000.0F.
-    konstante Fließ64 beispiel_fließ64 ist 6000.0.
+    konstante Fließ32 beispiel_fließ32 ist 3000,0.
+    konstante Fließ64 beispiel_fließ64 ist 6000,0.
 
     beispiel_ganzzahl8 ausgeben.
     beispiel_ganzzahl16 ausgeben.
@@ -26,7 +26,7 @@ funktion Haupteingang:
 
     zahlen ausgeben.
 
-    Vektorvon Zeichenkette namen ist ["Anna", "Bert"].
+    variable Vektorvon Zeichenkette namen ist ["Anna", "Bert"].
 
     namen ausgeben.
 
@@ -34,14 +34,16 @@ funktion Haupteingang:
 
     namen ausgeben.
 
-    konstante Wörterbuchvon Schlüssel Ganzzahl32 zu Wert Zeichenkette karte ist
+    variable Wörterbuchvon Schlüssel Ganzzahl32 zu Wert Zeichenkette karte ist
     {
         1 : "eins",
-        2 : "zwei",
+        2 : "zwei"
     }.
 
     karte ausgeben.
 
     In karte wird 1 "drei" sein.
+
+    karte ausgeben.
 
 funktionsende Haupteingang
